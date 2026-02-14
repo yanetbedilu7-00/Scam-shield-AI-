@@ -3,253 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ScamSentinel Gemini</title>
-
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
 <style>
-body{
-  background:white;
-  font-family:system-ui;
-}
-
-/* LOGIN */
-.login-box{
-  max-width:400px;
-  margin:120px auto;
-  background:#eff6ff;
-  padding:2rem;
-  border-radius:1rem;
-  text-align:center;
-}
-input{
-  width:100%;
-  padding:0.8rem;
-  border:2px solid #2563eb;
-  border-radius:0.7rem;
-  margin-top:0.7rem;
-}
-.login-btn{
-  background:#2563eb;
-  color:white;
-  width:100%;
-  padding:0.8rem;
-  border-radius:0.7rem;
-  margin-top:1rem;
-}
-.login-btn:hover{background:#1e40af}
-
-/* APP */
-.box{
-  background:#2563eb;
-  color:white;
-  font-size:1.8rem;
-  padding:2rem;
-  border-radius:1rem;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
-  margin-bottom:1rem;
-}
-.box:hover{
-  background:#1e40af;
-  transform:scale(1.02);
-}
-.section{
-  display:none;
-  background:#eff6ff;
-  padding:1.5rem;
-  border-radius:1rem;
-  margin-top:1rem;
-}
-textarea{
-  width:100%;
-  padding:1rem;
-  border:2px solid #2563eb;
-  border-radius:0.75rem;
-}
-button{
-  background:#2563eb;
-  color:white;
-  padding:0.7rem 1.5rem;
-  border-radius:0.75rem;
-  margin-top:0.5rem;
-}
-button:hover{
-  background:#1e40af;
-}
-.result-card{
-  background:white;
-  padding:1rem;
-  margin-top:1rem;
-  border-left:6px solid #2563eb;
-  border-radius:0.75rem;
-}
-.icon{
-  font-size:1.5rem;
-  cursor:pointer;
-}
-footer{
-  background:black;
-  color:white;
-  padding:1rem;
-  margin-top:3rem;
-  text-align:center;
-}
+  body { font-family: system-ui; margin:0; padding:0; background:white; color:#1e40af; }
+  .page { display:none; padding:2rem; max-width:3xl; margin:0 auto; }
+  .active-page { display:block; }
+  h1, h2, h3 { color:#1e40af; }
+  p { margin-bottom:0.75rem; }
+  button { background:#3b82f6; color:white; padding:0.5rem 1rem; border-radius:0.5rem; cursor:pointer; transition:0.3s; margin-top:0.5rem; }
+  button:hover { background:#2563eb; }
+  input { width:100%; padding:0.5rem; margin:0.5rem 0; border-radius:0.5rem; border:1px solid #3b82f6; }
+  .textarea { width:100%; padding:0.75rem; border:1px solid #3b82f6; border-radius:0.5rem; margin-bottom:0.5rem; }
+  .result-card { background:#e0f2fe; padding:1rem; border-left:6px solid #3b82f6; margin-top:1rem; border-radius:0.5rem; }
+  .section { display:none; margin-top:1rem; padding:1rem; background:#f0f8ff; border-radius:1rem; }
+  .upload-icon { cursor:pointer; font-size:1.5rem; margin-left:0.5rem; }
+  .footer { text-align:center; padding:1rem; background:black; color:white; margin-top:2rem; border-radius:0.25rem; }
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN PAGE -->
-<div id="loginPage" class="login-box">
-<h2 class="text-2xl font-bold text-blue-700">Sign In</h2>
+<!-- =================== LANDING PAGE =================== -->
+<div id="landingPage" class="page active-page text-center">
+  <h1 class="text-6xl font-extrabold mb-4 text-blue-600">10,000+</h1>
+  <h2 class="text-3xl font-bold mb-4">Welcome to ScamSentinel Gemini</h2>
 
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+  <p>🛡 ScamSentinel Gemini is an AI-powered tool designed to help users detect suspicious messages and avoid online scams and phishing attempts.</p>
+  <p>💡 It analyzes incoming text messages, emails, and social media communications to identify red flags, manipulation techniques, and potential risks.</p>
+  <p>✅ You can also generate safe messages (Green Flags) that are free from risky content, ensuring your communication stays secure and professional.</p>
+  <p>📊 The app provides detailed explanations, highlights dangerous content, and recommends safe next steps so you can respond confidently.</p>
+  <p>📝 Whether you’re a student, professional, or casual user, ScamSentinel Gemini helps you stay protected from online fraud with clarity and speed.</p>
+  <p>🔒 Experience a demo with 99.9% accuracy (mock mode) and learn how to identify risky content before it affects you.</p>
 
-<button class="login-btn" onclick="login()">Sign In</button>
+  <button id="goToSignIn" class="px-6 py-3 text-xl rounded-lg mt-4">Sign In</button>
 
-<p class="text-sm mt-3 text-gray-600">Demo login (no real account needed)</p>
+  <p class="mt-8 text-gray-600">Contact: yanetbedilu7@gmail.com | +251922478313</p>
 </div>
 
-<!-- APP PAGE -->
-<div id="appPage" style="display:none;" class="p-6">
-
-<h1 class="text-4xl font-bold text-center text-blue-700 mb-6">
-🛡 ScamSentinel Gemini
-</h1>
-
-<div class="max-w-3xl mx-auto">
-
-<div class="box" onclick="showSection('check')">Check Suspicious Message</div>
-<div class="box" onclick="showSection('generate')">Generate Green Flag Message</div>
-<div class="box" onclick="showSection('tips')">Safety Tips</div>
-
-<!-- CHECK -->
-<div id="check" class="section">
-<textarea id="userInput" rows="4" placeholder="Paste suspicious message..."></textarea>
-
-<div class="flex gap-3 mt-2">
-<span class="icon">📷</span>
-<span class="icon">🎤</span>
+<!-- =================== SIGN IN PAGE =================== -->
+<div id="signInPage" class="page text-center">
+  <h1 class="text-4xl font-bold mb-4">Sign In</h1>
+  <input type="email" id="email" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button id="signInBtn">Sign In</button>
+  <p class="mt-4 text-gray-600">Contact: yanetbedilu7@gmail.com | +251922478313</p>
 </div>
 
-<button onclick="analyze()">Analyze</button>
-<div id="result"></div>
+<!-- =================== MAIN MOCK CHECKER PAGE =================== -->
+<div id="mainPage" class="page">
+  <h1 class="text-3xl font-bold mb-4 text-center">ScamSentinel Gemini</h1>
+
+  <!-- Boxes -->
+  <div class="box cursor-pointer bg-blue-500 text-white font-bold p-4 mb-4 rounded" onclick="toggleSection('checkSection')">Check Suspicious Message</div>
+  <div class="box cursor-pointer bg-blue-500 text-white font-bold p-4 mb-4 rounded" onclick="toggleSection('generateSection')">Generate Green Flag Message</div>
+  <div class="box cursor-pointer bg-blue-500 text-white font-bold p-4 mb-4 rounded" onclick="toggleSection('tipsSection')">Tips</div>
+
+  <!-- Check Section -->
+  <div id="checkSection" class="section">
+    <textarea id="userInput" rows="4" class="textarea" placeholder="Enter suspicious message"></textarea>
+    <div class="flex items-center mt-2 gap-2 justify-center">
+      <label class="upload-icon">📷 <input type="file" class="hidden"></label>
+      <label class="upload-icon">🎤 <input type="file" class="hidden"></label>
+    </div>
+    <button id="checkBtn">Analyze</button>
+    <div id="resultsTimeline"></div>
+  </div>
+
+  <!-- Generate Section -->
+  <div id="generateSection" class="section">
+    <textarea id="greenInput" rows="3" class="textarea" placeholder="Enter message or idea"></textarea>
+    <button id="generateBtn">Generate Safe Message</button>
+    <div id="greenResult" class="mt-2 result-card"></div>
+  </div>
+
+  <!-- Tips Section -->
+  <div id="tipsSection" class="section max-h-96 overflow-y-scroll">
+    <h2 class="font-bold text-xl mb-2">Tips - Classified</h2>
+    <div id="tipsContent"></div>
+  </div>
 </div>
 
-<!-- GENERATE -->
-<div id="generate" class="section">
-<textarea id="greenInput" rows="3" placeholder="Enter your idea..."></textarea>
-<button onclick="generateSafe()">Generate</button>
-<div id="greenResult"></div>
-</div>
-
-<!-- TIPS -->
-<div id="tips" class="section max-h-64 overflow-y-scroll">
-<ul class="list-disc ml-5 space-y-1">
-<li>Never share OTP</li>
-<li>Don't click unknown links</li>
-<li>Verify sender</li>
-<li>Use strong passwords</li>
-<li>Enable 2FA</li>
-<li>Ignore urgent money requests</li>
-<li>Check spelling mistakes</li>
-<li>Block suspicious senders</li>
-</ul>
-</div>
-
-</div>
-
-<footer>
-Contact: yanetbedilu7@gmail.com | +251922478313  
-<br>All Rights Reserved © 2026
+<footer class="footer">
+  All rights reserved | Contact: yanetbedilu7@gmail.com | +251922478313
 </footer>
 
-</div>
-
 <script>
+  // ----------------- Page Navigation -----------------
+  const landingPage = document.getElementById('landingPage');
+  const signInPage = document.getElementById('signInPage');
+  const mainPage = document.getElementById('mainPage');
 
-/* LOGIN */
-function login(){
-const email=document.getElementById("email").value;
-const pass=document.getElementById("password").value;
+  document.getElementById('goToSignIn').addEventListener('click', ()=>{
+    landingPage.classList.remove('active-page');
+    signInPage.classList.add('active-page');
+  });
 
-if(!email || !pass){
-alert("Enter email and password");
-return;
-}
+  document.getElementById('signInBtn').addEventListener('click', ()=>{
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if(!email || !password){ alert("Enter email and password"); return; }
+    signInPage.classList.remove('active-page');
+    mainPage.classList.add('active-page');
+  });
 
-document.getElementById("loginPage").style.display="none";
-document.getElementById("appPage").style.display="block";
-}
+  function toggleSection(id){
+    ['checkSection','generateSection','tipsSection'].forEach(s=>{
+      document.getElementById(s).style.display=(s===id?'block':'none');
+    });
+  }
 
-/* SECTIONS */
-function showSection(id){
-["check","generate","tips"].forEach(s=>{
-document.getElementById(s).style.display="none";
-});
-document.getElementById(id).style.display="block";
-}
+  // ----------------- Tips -----------------
+  const tips = {
+    "How to Know": ["Check sender email", "Verify phone numbers", "Scrutinize unknown links"],
+    "How to Check": ["Hover links before clicking", "Scan attachments", "Check sender authenticity"],
+    "How to Avoid": ["Enable 2FA", "Use strong passwords", "Do not share sensitive info"]
+  };
+  const tipsContent = document.getElementById('tipsContent');
+  for(const cat in tips){
+    let html=`<h3 class="font-bold text-blue-600 mt-2">${cat}</h3><ul class="ml-4">`;
+    tips[cat].forEach(t=>{ html+=`<li>${t}</li>` });
+    html+='</ul>';
+    tipsContent.innerHTML+=html;
+  }
 
-/* MOCK ANALYSIS */
-function analyze(){
-const text=document.getElementById("userInput").value.trim();
-if(!text){alert("Enter message");return;}
+  // ----------------- Mock Checker -----------------
+  document.getElementById('checkBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('userInput').value.trim();
+    if(!text) return alert('Enter message');
+    let result = {};
+    // Simple mock logic: if contains "money" => high risk else low risk
+    if(/money|password|bank|urgent/i.test(text)) result = {
+      riskLevel:"High", confidence:99, summary:"Potential Scam", explanation:"Contains risky keywords",
+      redFlags:["money"], saferVersion:"Do not request money", safeNextSteps:"Ignore message", followUpQuestion:"Are you sure you trust this sender?"
+    };
+    else result = {
+      riskLevel:"Low", confidence:95, summary:"Safe Message", explanation:"No risky content detected",
+      redFlags:[], saferVersion:text, safeNextSteps:"None", followUpQuestion:"None"
+    };
+    let highlighted = text;
+    result.redFlags.forEach(f=>{ highlighted=highlighted.replace(new RegExp(`(${f})`,"gi"),`<span style="color:red;font-weight:bold;">$1</span>`); });
+    document.getElementById('resultsTimeline').innerHTML = `<div class="result-card">
+      <b>Risk Level:</b> ${result.riskLevel} (${result.confidence}% confidence)<br>
+      <b>Summary:</b> ${result.summary}<br>
+      <b>Explanation:</b> ${result.explanation}<br>
+      <b>Red Flags:</b> ${result.redFlags.join(', ')}<br>
+      <b>Safer Version:</b> ${result.saferVersion}<br>
+      <b>Next Steps:</b> ${result.safeNextSteps}<br>
+      <b>Follow Up:</b> ${result.followUpQuestion}
+    </div>`;
+  });
 
-let result={
-riskLevel:"Low",
-confidence:90,
-summary:"Message appears safe.",
-explanation:"No suspicious patterns detected.",
-redFlags:[],
-saferVersion:text,
-safeNextSteps:"You may reply normally.",
-followUpQuestion:"Do you know the sender?"
-};
-
-const lower=text.toLowerCase();
-
-if(lower.includes("send money")||lower.includes("verify")||lower.includes("password")){
-result={
-riskLevel:"High",
-confidence:97,
-summary:"Suspicious message detected.",
-explanation:"Requests sensitive info or money.",
-redFlags:["Urgency","Money request"],
-saferVersion:"Contact company through official website.",
-safeNextSteps:"Do not reply.",
-followUpQuestion:"Is sender unknown?"
-};
-}
-
-document.getElementById("result").innerHTML=`
-<div class="result-card animate__animated animate__fadeInUp">
-<b>Risk:</b> ${result.riskLevel}<br>
-<b>Confidence:</b> ${result.confidence}%<br>
-<b>Summary:</b> ${result.summary}<br>
-<b>Explanation:</b> ${result.explanation}<br>
-<b>Red Flags:</b> ${result.redFlags.join(", ")}<br>
-<b>Safer Version:</b> ${result.saferVersion}<br>
-<b>Next Steps:</b> ${result.safeNextSteps}<br>
-<b>Follow Up:</b> ${result.followUpQuestion}
-</div>`;
-}
-
-/* GENERATE SAFE */
-function generateSafe(){
-const text=document.getElementById("greenInput").value;
-if(!text){alert("Enter idea");return;}
-document.getElementById("greenResult").innerHTML=
-`<div class="result-card animate__animated animate__fadeInUp">
-${text} ✅ Looks safe and polite.
-</div>`;
-}
-
+  document.getElementById('generateBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('greenInput').value.trim();
+    if(!text) return alert('Enter idea');
+    document.getElementById('greenResult').innerHTML = `<b>Generated Safe Message:</b><br>${text} ✅ (Mock green flag)`;
+  });
 </script>
-
 </body>
 </html>
